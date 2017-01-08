@@ -1,0 +1,20 @@
+{%extends 'base.html'%}
+
+{%block title%}Perfil{%endblock title%}
+
+{%block content%}
+
+<h1 class="centrar">Bienvenido(a):</h1>
+<h2 class="centrar">{{user.first_name}} {{user.last_name}}</h2>
+
+{%if request.user.is_staff is False%}
+<div class="container">
+<h4>Información personal</h4>      
+<p>Usuario: {{user.username}}</p>
+
+<p>Banco: {{perfil.banco}}</p>
+<p>CTA: {{perfil.cta}}</p>
+<p>Telefono: {{perfil.telefono}}</p>
+</div>   
+{%endif%}  
+{%endblock content%}

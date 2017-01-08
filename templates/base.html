@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{%block title%}{%endblock title%}</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'FondoDeInversion/estilos.css' %}" />
+
+  </head>
+  <body>
+    <header>
+    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navegation-fm">
+            <span class="sr-only">Ocultar / Desplegar</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="#" class="navbar-brand">Fondo de Inversión</a>
+        </div>
+        <!-- Inicia menu -->
+        <div class="collapse navbar-collapse" id="navegation-fm">
+          <ul class="nav navbar-nav navbar-right">
+            <li {% if request.resolver_match.url_name == 'Profile' %}class="active"{% endif %}>
+              <a href="{%url 'accounts:Profile'%}">Inicio</a>
+            </li>
+            {%if request.user.is_staff%}
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Usuarios
+              <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="{%url 'accounts:CreateViewAccount'%}">Crear</a></li>
+                <li><a href="{%url 'accounts:ListViewAccounts'%}">Listas</a></li>
+              </ul>
+            </li>
+            <li {% if request.resolver_match.url_name == 'ListViewInversionesPorPagar' %}class="active"{% endif %}>
+              <a href="{%url 'inversiones:ListViewInversionesPorPagar'%}">Inversiones por pagar</a>
+            </li>
+            {%else%}
+            <li {% if request.resolver_match.url_name == 'inversioneDetailViewInversion' %}class="active"{% endif %}>
+              <a href="{%url 'accounts:DetailViewAccount' request.user.pk%}">Mis inversiones</a>
+            </li>
+            {%endif%}
+            <li {% if request.resolver_match.url_name == 'listCanciones' %}class="active"{% endif %}>
+              <a href="">Cerrar sesión</a>
+            </li>
+          </ul>
+        </div>  
+      </div>
+    </nav>
+  </header>
+    <div class="container">
+    <div class="row">
+    <div class="col-sm-12 col-md-12">{%block content%}{%endblock content%}</div>
+    </div>
+  </div>
+  </body>
+</html>
+

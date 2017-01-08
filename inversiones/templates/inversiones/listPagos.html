@@ -1,0 +1,49 @@
+{%extends 'base.html'%}
+{% load humanize %}
+{%block content%}
+
+  <div class="jumbotron">
+    <h1>Información de la Inversión</h1>
+    <p>Comprobante: </p>      
+    <img src="{{inversion.comprobante.url}}" height="100px">
+<p>Inversionista: {{inversion.user}}</p>
+<p>Cantidad: {{inversion.cantidad|intcomma}}</p>
+<p>Status: {%if inversion.CambioStatus is None%}{{inversion.status}}{%endif%}</p>
+<p>Fecha: {{inversion.fecha_alta|date:"d/m/Y"}}</p>
+</div>
+<a href="{%url 'inversiones:CreateViewPago' inversion.pk%}">Registar Pago</a>
+
+
+<h2 class="centrar">Lista de Pagos</h2>
+<table class="table">
+	<thead>
+		<tr>
+			<th><p align="center">Cantidad</p></th>
+			<th><p align="center">Fecha de alta</p></th>
+			<th><p align="center">Concepto</p></th>
+			<th><p align="center">Comprobante</p></th>
+			<th colspan="2" ><p align="center">Acciones</p></th>
+		</tr>
+	</thead>
+	<tbody>
+{%for pago in pagos%}
+		
+			<tr>
+				<td>{{pago.cantidad|intcomma }}</td>
+				<td>{{pago.fecha_alta|date:"d/m/Y"}}</td>
+				<td>{{pago.tipo}}</td>
+				<td>{% if pago.comprobante %}
+						<img src="{{ pago.comprobante.url }}" alt="Comprobante" height="100px" />
+					{% endif %}</td>
+				<td><a href="">Eliminar</a></td>
+			</tr>
+{%empty%}
+		</tbody>
+</table>
+
+	<h3 class="centrar">No se ha realizado algun pago</h3>
+
+{%endfor%}
+
+{%endblock content%}
+
