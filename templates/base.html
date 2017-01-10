@@ -57,7 +57,7 @@
             </li>
             {%endif%}
             <li {% if request.resolver_match.url_name == 'listCanciones' %}class="active"{% endif %}>
-              <a href="">Cerrar sesión</a>
+              <a href="{%url 'accounts:logout'%}">Cerrar sesión</a>
             </li>
           </ul>
         </div>  

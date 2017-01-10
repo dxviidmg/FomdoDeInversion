@@ -4,7 +4,7 @@
 {%if request.user.is_staff%}
 <div class="jumbotron">
   <div class="container">
-    <h1>Información personal</h1>      
+    <h1 class="centrar">Información personal</h1>      
     <p>Usuario: {{user.username}}</p>
     <p>Nombre: {{user.first_name}} {{user.last_name}}</p>
     <p>Banco: {{perfil.banco}}</p>
@@ -15,6 +15,8 @@
 <a href="{%url 'inversiones:CreateViewInversion' user.pk%}">Registrar inversión</a>
 {%endif%}
 <h2 class="centrar">Lista de Inversiones</h2>
+
+<div class="table-responsive">
 <table class="table">
 	<thead>
 		<tr>
@@ -36,11 +38,12 @@
 			</tr>
 {%empty%}
 	</tbody>
-
+</table>
 	<h3 class="centrar">No se han registrado inversiones</h3>
 
 {%endfor%}
-</table>	
+
+</div>	
  <ul class="pagination nav navbar-nav">
     {% if inversiones.has_previous %}
             <li><a href="?page={{ inversiones.previous_page_number }}">Prev</a></li>

@@ -6,8 +6,11 @@ from .models import *
 from inversiones.models import Inversion
 from .forms import *
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 class ListViewAccounts(View):
+	@method_decorator(login_required)
 	def get(self, request):
 		template_name = "accounts/listAccounts.html"
 		listUsers = User.objects.all().order_by('last_name', 'first_name').filter(is_superuser=False)
@@ -30,11 +33,12 @@ class ListViewAccounts(View):
 		return render(request, template_name, context)
 
 class DetailViewAccount(View):
+	@method_decorator(login_required)
 	def get(self, request, pk):
 		template_name="accounts/detailAccount.html"	
 		user = get_object_or_404(User, pk=pk)
-		#perfil = Perfil.objects.get(user=user)
-		perfil = get_object_or_404(Perfil, user=user)
+		perfil = Perfil.objects.get(user=user)
+
 		lisInversiones = Inversion.objects.filter(user=user)
 		paginator = Paginator(lisInversiones, 10)
 
@@ -57,7 +61,7 @@ class DetailViewAccount(View):
 		return render(request, template_name, context)
 
 class CreateViewAccount(View):
-#	@method_decorator(login_required)
+	@method_decorator(login_required)
 	def get(self, request):
 		template_name = "accounts/createAccount.html"
 		
@@ -69,7 +73,6 @@ class CreateViewAccount(View):
 			'PerfilForm': PerfilForm,
 		}
 		return render(request,template_name,context)
-
 	def post(self,request):
 		template_name = "accounts/createAccount.html"
 
@@ -90,13 +93,53 @@ class CreateViewAccount(View):
 			NuevoPerfil = NuevoPerfilForm.save(commit=False)
 			NuevoPerfil.user = NuevoUser
 			NuevoPerfil.save()
+		return redirect("accounts:ListViewAccounts")
 
+class UpdateViewAccount(View):
+	@method_decorator(login_required)
+	def get(self, request, pk):
+		template_name = "accounts/updateAccount.html"
+		user = get_object_or_404(User, pk=pk)
+		perfil = Perfil.objects.get(user=user)
+		EdicionUserForm = UserCreateForm(instance=user)
+		EdicionPerfilForm = PerfilCreateForm(instance=perfil)
+		context = {
+		'EdicionUserForm': EdicionUserForm,
+		'EdicionPerfilForm': EdicionPerfilForm
+		}
+		return render(request, template_name, context)
+	def post(self,request, pk):
+		template_name = "accounts/updateAccount.html"
+		user = get_object_or_404(User, pk=pk)
+		perfil = Perfil.objects.get(user=user)
+		EdicionUserForm = UserCreateForm(instance=user, data=request.POST)
+		if EdicionUserForm.is_valid:
+			EdicionUserForm.save()
+		EdicionPerfilForm = PerfilCreateForm(instance=perfil, data=request.POST)
+		if EdicionPerfilForm.is_valid:
+			EdicionPerfilForm.save()
+		return redirect("accounts:ListViewAccounts")
+
+class DeleteViewAccount(View):
+	@method_decorator(login_required)
+	def get(self, request, pk):
+		template_name = "accounts/deleteAccount.html"
+		user = get_object_or_404(User, pk=pk)
+		perfil = Perfil.objects.get(user=user)
+		context = {
+		'user': user,
+		}
+		return render(request, template_name, context)
+	def post(self, request, pk):
+		template_name = "accounts/deleteAccount.html"
+		user = get_object_or_404(User, pk=pk)
+		if request.method=='POST':
+			user.delete()
 		return redirect("accounts:ListViewAccounts")
 
 class LoginView(View):
 	def login(request):
 		template_name="registration/login.html"
-
 		username = request.POST.get("username", False)
 		password = request.POST.get("password", False)
 		user = authenticate(username=username, password=password)
@@ -108,16 +151,10 @@ class LoginView(View):
 			return render(request,template_name)
 
 class Profile(View):
-#	@method_decorator(login_required)
+	@method_decorator(login_required)
 	def get(self, request):
-		#if request.user.is_staff:
 		template_name = "accounts/profile.html"
-		#else:
-		#	template_name = "accounts/profileUser.html"
-
 		user = request.user
-		
-
 		try:
 			perfil = Perfil.objects.get(user=user)
 		except Perfil.DoesNotExist:
@@ -126,3 +163,10 @@ class Profile(View):
 			'perfil': perfil
 		}
 		return render(request,template_name,context)
+
+from django.contrib.auth import logout
+
+class LogoutView(View):
+	def logout(request):
+		logout(request)
+		return redirect('accounts:login')
