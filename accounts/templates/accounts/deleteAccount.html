@@ -4,10 +4,10 @@
 
 <br>
 <form action="." method="post" class="centrar">
-<h3>¿Estas seguro de querer borrar la información del inversionista <em>{{user.last_name}} {{user.first_name}}</em>?</h3>
+	<h3>¿Estas seguro de querer borrar la información del inversionista <em>{{user.last_name}} {{user.first_name}}</em>?</h3>
 	{%csrf_token%}
-<input type="submit" value="Borrar" class="btn btn-primary">
-<a href="{%url 'accounts:ListViewAccounts'%}" class="btn btn-primary" role="button">Cancelar</a>
+	<input type="submit" value="Borrar" class="btn btn-primary">
+	<a href="{%url 'accounts:ListViewAccounts'%}" class="btn btn-primary" role="button">Cancelar</a>
 </form>
 
 {%endblock content%}

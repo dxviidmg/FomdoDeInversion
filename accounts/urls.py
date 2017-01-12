@@ -1,9 +1,12 @@
 from django.conf.urls import url
 from . import views
+from django.contrib.auth.views import login, logout
 
 urlpatterns = [
-	url(r'^login/$', views.LoginView.login, name="login"),
-	url(r'^logout/$', views.LogoutView.logout, name="logout"),
+	url(r'^login/$', login, name="login"),
+	url(r'^logout/$', logout, name="logout"),
+	#url(r'^login/$', views.LoginView.login, name="login"),
+	#url(r'^logout/$', views.LogoutView.logout, name="logout"),
 	url(r'^profile/$', views.Profile.as_view(), name="Profile"),
 
 	url(r'^accounts/nuevo/$', views.CreateViewAccount.as_view(), name="CreateViewAccount"),

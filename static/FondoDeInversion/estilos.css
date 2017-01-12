@@ -58,3 +58,11 @@ body {
   background-color: #F2F2F2;
 }
 
+form{
+   padding:2px 0 10px 0 ;
+   cursor:pointer;
+   display:block;
+   width:300px;
+   margin: 0 auto;
+   text-align:center;
+}

@@ -8,6 +8,8 @@ urlpatterns = [
 	url(r'^inversiones/nuevo/(?P<pk>\d+)/$',views.CreateViewInversion.as_view(), name='CreateViewInversion'),
 
 	url(r'^inversiones/(?P<pk>\d+)/$', views.DetailViewInversion.as_view(), name="DetailViewInversion"),
+	url(r'^inversiones/actualizar/(?P<pk>\d+)/$', views.UpdateViewInversion.as_view(), name="UpdateViewInversion"),
+	url(r'^inversiones/eliminar/(?P<pk>\d+)/$', views.DeleteViewInversion.as_view(), name="DeleteViewInversion"),
 	url(r'^inversiones/$',views.ListViewInversionesPorPagar.as_view(), name='ListViewInversionesPorPagar'),
 
 ]

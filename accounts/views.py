@@ -137,18 +137,7 @@ class DeleteViewAccount(View):
 			user.delete()
 		return redirect("accounts:ListViewAccounts")
 
-class LoginView(View):
-	def login(request):
-		template_name="registration/login.html"
-		username = request.POST.get("username", False)
-		password = request.POST.get("password", False)
-		user = authenticate(username=username, password=password)
-		
-		if user is not None:
-			login(request, user)
-			return redirect("accounts:Profile")
-		else:
-			return render(request,template_name)
+from django.contrib import messages
 
 class Profile(View):
 	@method_decorator(login_required)

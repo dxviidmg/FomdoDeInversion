@@ -2,14 +2,14 @@
 
 {%block content%}
 
-<h2 class="centrar">Actualizar información del inversionista</h2>
-<br>
-<form action="." method="post" class="centrar">
-	{%csrf_token%}
-	{{EdicionUserForm.as_p}}
-	{{EdicionPerfilForm.as_p}}
-<input type="submit" value="Guardar cambios" class="btn btn-primary">
-<a href="{%url 'accounts:ListViewAccounts'%}" class="btn btn-primary" role="button">Cancelar</a>
-</form>
+	<h2 class="centrar">Actualizar información del inversionista</h2>
+	<br>
+	<form action="." method="post" class="centrar">
+		{%csrf_token%}
+		{{EdicionUserForm.as_p}}
+		{{EdicionPerfilForm.as_p}}
+		<input type="submit" value="Guardar cambios" class="btn btn-primary">
+		<a href="{%url 'accounts:ListViewAccounts'%}" class="btn btn-primary" role="button">Cancelar</a>
+	</form>
 
 {%endblock content%}

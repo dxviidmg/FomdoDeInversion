@@ -1,44 +1,48 @@
 {%extends 'base.html'%}
+
 {% load humanize %}
+
 {%block content%}
 
-<h2 class="centrar">Lista de inversiones por pagar</h2>
-<table class="table">
-	<thead>
-		<tr>
-			<th><p align="center">Cantidad</p></th>
-			<th><p align="center">Fecha de alta</p></th>
-			<th><p align="center">Status</p></th>
-			<th colspan="2" ><p align="center">Acciones</p></th>
-		</tr>
-	</thead>
-	<tbody>
-{%for inversion in inversiones%}
-		
+	<h2 class="centrar">Lista de inversiones por pagar</h2>
+	<table class="table table-responsive">
+		<thead>
+			<tr>
+				<th><p align="center">Cantidad</p></th>
+				<th><p align="center">Fecha de alta</p></th>
+				<th><p align="center">Status</p></th>
+				<th colspan="2" ><p align="center">Acciones</p></th>
+			</tr>
+		</thead>
+		<tbody>
+
+	{%for inversion in inversiones%}	
 			<tr>
 				<td>{{inversion.cantidad|intcomma}}</td>
 				<td>{{inversion.fecha_alta|date:"d/m/Y"}}</td>
 				<td>{{inversion.status}}</td>
 				<td><a href="{%url 'inversiones:DetailViewInversion' inversion.pk%}">Ver detalle</a></td>
 			</tr>
-{%empty%}
-	</tbody>
-</table>	
-	<p>Vacio</p>
 
-{%endfor%}
+	{%empty%}
+	
+		</tbody>
+	</table>	
+		<p>Vacio</p>
 
- <ul class="pagination nav navbar-nav">
-    {% if inversiones.has_previous %}
-            <li><a href="?page={{ inversiones.previous_page_number }}">Prev</a></li>
-    {% endif %}
-    {% for page in inversiones.paginator.page_range %}
-        <li class="{% if inversiones.number == page  %}active{% endif %}"><a href="?page={{page }}">{{ page }}</a></li>
-    {% endfor %}
+	{%endfor%}
 
-    {% if inversiones.has_next %}
-        <li> <a href="?page={{ inversiones.next_page_number }}">Next</a></li>
-    {% endif %}
- </ul>
+	 <ul class="pagination nav navbar-nav">
+	    {% if inversiones.has_previous %}
+	            <li><a href="?page={{ inversiones.previous_page_number }}">Prev</a></li>
+	    {% endif %}
+	    {% for page in inversiones.paginator.page_range %}
+	        <li class="{% if inversiones.number == page  %}active{% endif %}"><a href="?page={{page }}">{{ page }}</a></li>
+	    {% endfor %}
+
+	    {% if inversiones.has_next %}
+	        <li> <a href="?page={{ inversiones.next_page_number }}">Next</a></li>
+	    {% endif %}
+	 </ul>
 
 {%endblock content%}

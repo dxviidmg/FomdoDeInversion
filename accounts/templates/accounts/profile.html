@@ -4,17 +4,22 @@
 
 {%block content%}
 
-<h1 class="centrar">Bienvenido(a):</h1>
-<h2 class="centrar">{{user.first_name}} {{user.last_name}}</h2>
+	<h1 class="centrar">Bienvenido(a):</h1>
+	<h2 class="centrar">{{user.first_name}} {{user.last_name}}</h2>
 
-{%if request.user.is_staff is False%}
-<div class="container">
-<h4>Información personal</h4>      
-<p>Usuario: {{user.username}}</p>
+	{%if request.user.is_staff is False%}
+	
+	<div class="container">
 
-<p>Banco: {{perfil.banco}}</p>
-<p>CTA: {{perfil.cta}}</p>
-<p>Telefono: {{perfil.telefono}}</p>
-</div>   
-{%endif%}  
+		<h3>Información personal</h3>
+		<br>
+		<h4>Usuario: {{user.username}}</h4>
+
+		<h4>Banco: {{perfil.banco}}</h4>
+		<h4>CTA: {{perfil.cta}}</h4>
+		<h4>Telefono: {{perfil.telefono}}</h4>
+	</div>   
+	
+	{%endif%}  
+
 {%endblock content%}

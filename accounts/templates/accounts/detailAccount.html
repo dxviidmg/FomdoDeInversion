@@ -1,60 +1,79 @@
 {%extends 'base.html'%}
+
 {% load humanize %}
+
 {%block content%}
-{%if request.user.is_staff%}
-<div class="jumbotron">
-  <div class="container">
-    <h1 class="centrar">Información personal</h1>      
-    <p>Usuario: {{user.username}}</p>
-    <p>Nombre: {{user.first_name}} {{user.last_name}}</p>
-    <p>Banco: {{perfil.banco}}</p>
-    <p>CTA: {{perfil.cta}}</p>
-    <p>Telefono: {{perfil.telefono}}</p>
-  </div>     
-</div>
-<a href="{%url 'inversiones:CreateViewInversion' user.pk%}">Registrar inversión</a>
-{%endif%}
-<h2 class="centrar">Lista de Inversiones</h2>
 
-<div class="table-responsive">
-<table class="table">
-	<thead>
-		<tr>
-			<th><p align="center">Cantidad</p></th>
-			<th><p align="center">Fecha de alta</p></th>
-			<th><p align="center">Status</p></th>
-			<th colspan="2" ><p align="center">Acciones</p></th>
-		</tr>
-	</thead>
-	<tbody>
-{%for inversion in inversiones%}
+	{%if request.user.is_staff%}
+
+	<div class="jumbotron">
+		<div class="container">
+			<h1 class="centrar">Información personal</h1>      
+			<p>Usuario: {{user.username}}</p>
+			<p>Nombre: {{user.first_name}} {{user.last_name}}</p>
+			<p>Banco: {{perfil.banco}}</p>
+			<p>CTA: {{perfil.cta}}</p>
+			<p>Telefono: {{perfil.telefono}}</p>
+		</div>     
+	</div>
+	<a href="{%url 'inversiones:CreateViewInversion' user.pk%}">Registrar inversión</a>
+	{%endif%}
+
+	<h2 class="centrar">Lista de Inversiones</h2>
+
+	<div class="table-responsive">
+		<table class="table">
+			<thead>
+				<tr>
+					<th><p align="center">Cantidad</p></th>
+					<th><p align="center">Fecha de alta</p></th>
+					<th><p align="center">Status</p></th>
+					<th colspan="2" ><p align="center">Acciones</p></th>
+				</tr>
+			</thead>
+			<tbody>
+
+		{%for inversion in inversiones%}
+
+				<tr>
+					<td>{{inversion.cantidad|intcomma}}</td>
+					<td>{{inversion.fecha_alta|date:"d/m/Y"}}</td>
+					<td>{{inversion.status}}</td>
+					<td><a href="{%url 'inversiones:DetailViewInversion' inversion.pk%}">Ver detalle</a></td>
+					<td><a href="{%url 'inversiones:UpdateViewInversion' inversion.pk%}">Modificar</a></td>
+					<td><a href="{%url 'inversiones:DeleteViewInversion' inversion.pk%}">Eliminar</a></td>
+				</tr>
 		
-			<tr>
-				<td>{{inversion.cantidad|intcomma}}</td>
-				<td>{{inversion.fecha_alta|date:"d/m/Y"}}</td>
-				<td>{{inversion.status}}</td>
-				<td><a href="{%url 'inversiones:DetailViewInversion' inversion.pk%}">Ver detalle</a></td>
-				<td><a href="">Eliminar</a></td>
-			</tr>
-{%empty%}
-	</tbody>
-</table>
-	<h3 class="centrar">No se han registrado inversiones</h3>
+		{%empty%}
+		
+			</tbody>
+		</table>
+		<h3 class="centrar">No se han registrado inversiones</h3>
 
-{%endfor%}
+		{%endfor%}
 
-</div>	
- <ul class="pagination nav navbar-nav">
-    {% if inversiones.has_previous %}
-            <li><a href="?page={{ inversiones.previous_page_number }}">Prev</a></li>
-    {% endif %}
-    {% for page in inversiones.paginator.page_range %}
-        <li class="{% if inversiones.number == page  %}active{% endif %}"><a href="?page={{page }}">{{ page }}</a></li>
-    {% endfor %}
+	</div>
 
-    {% if inversiones.has_next %}
-        <li> <a href="?page={{ inversiones.next_page_number }}">Next</a></li>
-    {% endif %}
- </ul>
+	<ul class="pagination nav navbar-nav">
+	
+	{% if inversiones.has_previous %}
+	
+		<li><a href="?page={{ inversiones.previous_page_number }}">Prev</a></li>
+	
+	{%endif%}
+
+	{%for page in inversiones.paginator.page_range %}
+		
+		<li class="{% if inversiones.number == page  %}active{% endif %}"><a href="?page={{page }}">{{ page }}</a></li>
+
+	{%endfor%}
+
+	{%if inversiones.has_next%}
+		
+		<li> <a href="?page={{ inversiones.next_page_number }}">Next</a></li>
+
+	{%endif%}
+
+	</ul>
 
 {%endblock content%}
