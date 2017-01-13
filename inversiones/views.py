@@ -110,3 +110,44 @@ class CreateViewPago(View):
 			NuevoPago.inversion = inversion
 			NuevoPago.save()
 		return redirect("inversiones:DetailViewInversion", pk=inversion.pk)
+
+class UpdateViewPago(View):
+	@method_decorator(login_required)
+	def get(self, request, pk):
+		template_name = "inversiones/updatePago.html"
+		pago = get_object_or_404(Pago, pk=pk)
+		inversion = Inversion.objects.get(pago=pago)
+		EdicionPagoForm = PagoCreateForm(instance=pago)
+		context = {
+		'pago': pago,
+		'inversion': inversion,
+		'EdicionPagoForm': EdicionPagoForm,
+		}
+		return render(request,template_name,context)
+	def post(self, request, pk):
+		template_name = "inversiones/updatePago.html"
+		pago = get_object_or_404(Pago, pk=pk)
+		inversion = Inversion.objects.get(pago=pago)
+		EdicionPagoForm = PagoCreateForm(instance=pago, data=request.POST)
+		if EdicionPagoForm.is_valid:
+			EdicionPagoForm.save()
+		return redirect("inversiones:DetailViewInversion", pk=inversion.pk)
+
+class DeleteViewPago(View):
+	@method_decorator(login_required)
+	def get(self, request, pk):
+		template_name = "inversiones/deletePago.html"
+		pago = get_object_or_404(Pago, pk=pk)
+		inversion = Inversion.objects.get(pago=pago)
+		context = {
+		'pago': pago,
+		'inversion': inversion,
+		}
+		return render(request,template_name,context)
+	def post(self, request, pk):
+		template_name = "inversiones/deletePago.html"
+		pago = get_object_or_404(Pago, pk=pk)
+		inversion = Inversion.objects.get(pago=pago)
+		if request.method=='POST':
+			pago.delete()
+		return redirect("inversiones:DetailViewInversion", pk=inversion.pk)

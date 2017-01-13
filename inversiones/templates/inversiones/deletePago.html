@@ -1,0 +1,15 @@
+{%extends 'base.html'%}
+
+{% load humanize %}
+
+{%block content%}
+
+	<br>
+	<h3>¿Estas seguro de querer borrar la información del pago de <em>{{pago.cantidad|intcomma}} </em> de la inversión<em> {{inversion.cantidad|intcomma}}</em> de <em>{{user.first_name}} {{user.last_name}}</em>?</h3>
+	<form action="." method="post" class="centrar">
+		{%csrf_token%}
+		<input type="submit" value="Borrar" class="btn btn-primary">
+		<a href="{%url 'inversiones:DetailViewInversion' inversion.pk%}" class="btn btn-primary" role="button">Cancelar</a>
+	</form>
+
+{%endblock content%}

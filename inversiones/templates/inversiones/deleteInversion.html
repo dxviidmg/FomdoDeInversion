@@ -1,10 +1,12 @@
 {%extends 'base.html'%}
 
+{% load humanize %}
+
 {%block content%}
 
 	<br>
+	<h3>¿Estas seguro de querer borrar la información de la inversión <em>{{inversion.cantidad|intcomma}}</em> de <em>{{user.first_name}} {{user.last_name}}</em>?</h3>
 	<form action="." method="post" class="centrar">
-		<h3>¿Estas seguro de querer borrar la información de la inversión <em>{{inversion.cantidad}}</em> de <em>{{user.last_name}} {{user.first_name}}</em>?</h3>
 		{%csrf_token%}
 		<input type="submit" value="Borrar" class="btn btn-primary">
 		<a href="{%url 'accounts:DetailViewAccount' user.pk%}" class="btn btn-primary" role="button">Cancelar</a>

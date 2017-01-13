@@ -106,7 +106,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
-LANGUAGE_CODE = 'en_us'
+LANGUAGE_CODE = 'en'
 
 TIME_ZONE = 'America/Mexico_City'
 
@@ -132,3 +132,4 @@ from django.core.urlresolvers import reverse_lazy
 LOGIN_REDIRECT_URL = reverse_lazy('accounts:Profile')
 LOGOUT_REDIRECT_URL = reverse_lazy('accounts:login')
 
+#USE_THOUSAND_SEPARATOR = True

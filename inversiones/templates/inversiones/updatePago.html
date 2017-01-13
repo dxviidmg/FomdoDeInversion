@@ -1,0 +1,14 @@
+{%extends 'base.html'%}
+
+{%block content%}
+
+	<h2 class="centrar">Actualizar información de la inversión</h2>
+	<br>
+	<form action="." method="post" class="centrar">
+		{%csrf_token%}
+		{{EdicionPagoForm.as_p}}
+		<input type="submit" value="Guardar cambios" class="btn btn-primary">
+		<a href="{%url 'inversiones:DetailViewInversion' inversion.pk%}" class="btn btn-primary" role="button">Cancelar</a>
+	</form>
+
+{%endblock content%}
