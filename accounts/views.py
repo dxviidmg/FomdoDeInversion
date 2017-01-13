@@ -85,8 +85,7 @@ class CreateViewAccount(View):
 		if NuevoUserForm.is_valid(): 
 			NuevoUser = NuevoUserForm.save(commit=False)
 			NuevoUser.username = str(NuevoUser.last_name[0].upper()) + str(NuevoUser.last_name[1].upper()) + str(NuevoUser.last_name[2].upper()) + str(NuevoUser.last_name[3].upper()) + str(NuevoUser.first_name[0].upper()) + str(NuevoUser.first_name[1].upper()) + str(userActual)
-			NuevoUser.password = "generica" + str(NuevoUser.first_name[0].lower()) + str(NuevoUser.last_name[0].lower())
-			NuevoUser.set_password('generica')
+			NuevoUser.set_password('generica'+ str(NuevoUser.first_name[0].lower()) + str(NuevoUser.last_name[0].lower()))
 			NuevoUser.save()
 
 		if NuevoPerfilForm.is_valid():

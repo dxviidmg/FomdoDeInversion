@@ -28,7 +28,7 @@
 					<th><p align="center">Cantidad</p></th>
 					<th><p align="center">Fecha de alta</p></th>
 					<th><p align="center">Status</p></th>
-					<th colspan="2" ><p align="center">Acciones</p></th>
+					<th colspan="{%if request.user.is_staff%}3{%else%}1{%endif%}" ><p align="center">Acciones</p></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -40,8 +40,14 @@
 					<td>{{inversion.fecha_alta|date:"d/m/Y"}}</td>
 					<td>{{inversion.status}}</td>
 					<td><a href="{%url 'inversiones:DetailViewInversion' inversion.pk%}">Ver detalle</a></td>
+
+				{%if request.user.is_staff is True%}
+					
 					<td><a href="{%url 'inversiones:UpdateViewInversion' inversion.pk%}">Modificar</a></td>
 					<td><a href="{%url 'inversiones:DeleteViewInversion' inversion.pk%}">Eliminar</a></td>
+					
+				{%endif%}
+
 				</tr>
 		
 		{%empty%}

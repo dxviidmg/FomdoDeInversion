@@ -46,7 +46,12 @@
 				<th><p align="center">Fecha de alta</p></th>
 				<th><p align="center">Concepto</p></th>
 				<th><p align="center">Comprobante</p></th>
+
+				{%if request.user.is_staff %}
+				
 				<th colspan="2" ><p align="center">Acciones</p></th>
+				
+				{%endif%}
 			</tr>
 		</thead>
 		<tbody>
@@ -64,9 +69,16 @@
 				<img src="{{ pago.comprobante.url }}" alt="Comprobante" height="100px" />
 			
 			{% endif %}
+
 			</td>
+
+		{%if request.user.is_staff%}
+
 			<td><a href="{%url 'inversiones:UpdateViewPago' pago.pk%}">Modificar</a></td>
 			<td><a href="{%url 'inversiones:DeleteViewPago' pago.pk%}">Eliminar</a></td>
+			
+		{%endif%}
+		
 		</tr>
 		
 		{%empty%}
