@@ -13,6 +13,6 @@ urlpatterns = [
 	url(r'^accounts/eliminar/(?P<pk>\d+)/$', views.DeleteViewAccount.as_view(), name="DeleteViewAccount"),
 	url(r'^accounts/(?P<pk>\d+)/$', views.DetailViewAccount.as_view(), name="DetailViewAccount"),
 	url(r'^accounts', views.ListViewAccounts.as_view(),name="ListViewAccounts"),
-	url(r'^', login, name="login"),
+	url(r'^login', login, name="login"),
 ]
 

@@ -28,12 +28,15 @@
 
 	{%empty%}
 	
-		</tbody>
-	</table>	
-		<p>Vacio</p>
+
+			<tr>
+				<td colspan="5"><h4>Lista de inversiones vacia</h4></td>
+			</tr>
 
 	{%endfor%}
 
+		</tbody>
+	</table>	
 	 <ul class="pagination nav navbar-nav">
 	    {% if inversiones.has_previous %}
 	            <li><a href="?page={{ inversiones.previous_page_number }}">Prev</a></li>
